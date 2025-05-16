@@ -19,24 +19,22 @@ BombTower::BombTower(sf::Vector2f p)
 void BombTower::draw(sf::RenderTarget& rt, sf::RenderStates st) const
 {
     rt.draw(m_sprite, st);
-    Tower::draw(rt, st);   // range ring in preview mode
+    Tower::draw(rt, st);  
 }
 std::vector<ProjectilePtr> BombTower::update(
     float dt,
-    const std::vector<std::unique_ptr<Balloon>>& balloons,
-    int& /*playerPoints*/)
+    const std::vector<std::unique_ptr<Balloon>>& balloons)
 {
     m_timer += dt;
     if (!canFire()) return {};
 
-    // choose target yielding max hits
     Balloon* bestTarget=nullptr;
     std::size_t bestCount=0;
 
     for (auto& cand : balloons) {
-        if (cand->reachedGoal()) continue;
+        if (cand->reachedGoal() or cand->isDead()) continue;
         if (!isInRange(cand->getPosition())) continue;
-
+        
         std::size_t count=0;
         for (auto& b : balloons) {
             float d = std::hypot(b->getPosition().x - cand->getPosition().x,

@@ -15,17 +15,16 @@ Wave::Wave(const Map& m,const AttackWave& sp):m_map(m),m_gapMs(sp.enemyLaunchGap
     for(auto& [type,cnt]: sp.enemiesCount)
         for(int i=0;i<cnt;++i) m_q.push(strToKind(type));
 
-    // shuffle
     std::vector<Balloon::Kind> tmp;
-    while (!m_q.empty()) {              // dump queue into a temp vector
+    while (!m_q.empty()) {             
         tmp.push_back(m_q.front());
         m_q.pop();
     }
-    std::shuffle(tmp.begin(), tmp.end(), rng);   // <-- random order
-    for (auto k : tmp) m_q.push(k);              // rebuild queue randomly
+    std::shuffle(tmp.begin(), tmp.end(), rng);  
+    for (auto k : tmp) m_q.push(k);             
 
     std::uniform_int_distribution<int> dist(m_gapMs.first,m_gapMs.second);
-    m_timer = - (dist(rng) / 1000.f); // initial negative delay
+    m_timer = - (dist(rng) / 1000.f);
 }
 
 std::vector<std::unique_ptr<Balloon>> Wave::update(float dt){
@@ -38,7 +37,6 @@ std::vector<std::unique_ptr<Balloon>> Wave::update(float dt){
     while(!m_q.empty() && m_timer>=0.f){
         auto kind=m_q.front(); m_q.pop();
 
-        // to pixel position of start tile
         sf::Vector2f startPx = { 0.f,0.f };
         startPx = { m_map.start().y * Globals::TILE + Globals::TILE,
                     m_map.start().x * Globals::TILE + Globals::TILE/2.f };

@@ -1,6 +1,5 @@
 #include "Hud.hpp"
-#include <stdexcept>
-#include <string>
+
 
 // singleton font
 static sf::Font& hudFont()
@@ -14,7 +13,7 @@ static sf::Font& hudFont()
 Hud::Hud(int& lives, int& score)
 : m_lives (lives)
 , m_score (score)
-, m_txtLives (hudFont(), "Lives: 0", 24)   // <-- Font first
+, m_txtLives (hudFont(), "Lives: 0", 24)   
 , m_txtScore(hudFont(), "Score: 0", 24)
 {
     m_txtLives .setFillColor(sf::Color::Red);

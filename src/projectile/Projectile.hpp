@@ -8,9 +8,9 @@ class Projectile : public sf::Drawable {
 public:
     virtual ~Projectile() = default;
 
-    virtual bool update(float dt,
+    virtual std::pair<bool, std::vector<std::unique_ptr<Balloon>>> update(float dt,
                         std::vector<std::unique_ptr<Balloon>>& balloons,
-                        int& playerPoints,
-                        int& playerHealth) = 0;
+                        int& playerPoints) = 0;
+    virtual bool targets(const Balloon* b) const = 0;
 };
 using ProjectilePtr = std::unique_ptr<Projectile>;

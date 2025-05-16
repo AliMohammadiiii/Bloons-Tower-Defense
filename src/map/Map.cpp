@@ -36,13 +36,12 @@ void Map::parseFile(const std::string& fn){
 
 void Map::tracePath()
 {
-    auto dir = sf::Vector2i{0,0};          // current direction
+    auto dir = sf::Vector2i{0,0};          
     sf::Vector2i cur = m_start;
     m_path.push_back(cur);
 
     const int dr[4]={-1,0,1,0}, dc[4]={0,1,0,-1};
 
-    // establish initial heading – the only neighbour that is Path/Finish
     for(int k=0;k<4;++k){
         int nr=cur.x+dr[k], nc=cur.y+dc[k];
         if(inBounds(nr,nc) && (m_grid[nr][nc]=='O' || m_grid[nr][nc]=='F')){
@@ -57,12 +56,10 @@ void Map::tracePath()
         if(inBounds(ahead.x,ahead.y) &&
            (m_grid[ahead.x][ahead.y]=='O'||m_grid[ahead.x][ahead.y]=='F'))
         {
-            // can keep going straight
             cur=ahead;
         } else {
-            // must turn: find the single 90° neighbour that’s valid & unvisited
             bool turned=false;
-            for(int rot=-1; rot<=1; rot+=2){          // left, then right
+            for(int rot=-1; rot<=1; rot+=2){         
                 int k = ( (std::find_if(dr,dr+4,[&](int v){return v==dir.x;})
                            -dr + rot + 4) % 4 );
                 sf::Vector2i nxt={cur.x+dr[k],cur.y+dc[k]};
@@ -71,7 +68,7 @@ void Map::tracePath()
                    std::find(m_path.begin(),m_path.end(),nxt)==m_path.end())
                 { dir={dr[k],dc[k]}; cur=nxt; turned=true; break; }
             }
-            if(!turned) break; // should never happen on a valid map
+            if(!turned) break; 
         }
         m_path.push_back(cur);
     }

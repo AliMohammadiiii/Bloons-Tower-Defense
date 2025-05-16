@@ -18,18 +18,16 @@ IceTower::IceTower(sf::Vector2f p)
 void IceTower::draw(sf::RenderTarget& rt, sf::RenderStates st) const
 {
     rt.draw(m_sprite, st);
-    Tower::draw(rt, st);   // range ring in preview mode
+    Tower::draw(rt, st);  
 }
 
 std::vector<ProjectilePtr> IceTower::update(
     float dt,
-    const std::vector<std::unique_ptr<Balloon>>& balloons,
-    int& /*playerPoints*/)
+    const std::vector<std::unique_ptr<Balloon>>& balloons)
 {
     m_timer += dt;
     if (!canFire()) return {};
 
-    // target closest non-frozen balloon
     Balloon* target=nullptr;
     float best=range()*range();
     for (auto& b : balloons) {

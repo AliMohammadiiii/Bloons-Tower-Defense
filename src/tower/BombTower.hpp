@@ -5,8 +5,7 @@ class BombTower : public Tower {
 public:
     BombTower(sf::Vector2f pos);
     std::vector<ProjectilePtr> update(float dt,
-        const std::vector<std::unique_ptr<Balloon>>& balloons,
-        int& playerPoints) override;
+        const std::vector<std::unique_ptr<Balloon>>& balloons) override;
 
 private:
     float m_explosionRadius{60.f};

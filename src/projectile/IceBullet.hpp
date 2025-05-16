@@ -5,11 +5,11 @@ class IceBullet : public Projectile {
 public:
     IceBullet(sf::Vector2f start, Balloon* target);
 
-    bool update(float dt,
+    std::pair<bool, std::vector<std::unique_ptr<Balloon>>> update(float dt,
         std::vector<std::unique_ptr<Balloon>>& balloons,
-        int& playerPoints,
-        int& playerHealth) override;
+        int& playerPoints) override;
 
+    bool targets(const Balloon* b) const override { return b && b == m_target; }
 private:
     sf::CircleShape m_shape;
     sf::Vector2f    m_pos;

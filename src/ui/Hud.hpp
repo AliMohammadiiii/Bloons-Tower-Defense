@@ -1,11 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
+#include <stdexcept>
+#include <string>
 class Hud {
 public:
     Hud(int& lives, int& score);
 
-    void update();                     // call each frame
+    void update();                     
     void draw(sf::RenderWindow&) const;
 
 private:

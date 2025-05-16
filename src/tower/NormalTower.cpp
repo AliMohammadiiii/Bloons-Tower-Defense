@@ -26,17 +26,14 @@ void NormalTower::draw(sf::RenderTarget& rt, sf::RenderStates st) const
 
 std::vector<ProjectilePtr> NormalTower::update(
     float dt,
-    const std::vector<std::unique_ptr<Balloon>>& balloons,
-    int& playerPoints)
+    const std::vector<std::unique_ptr<Balloon>>& balloons)
 {
     m_timer += dt;
     if (!canFire()) return {};
-    // playerPoints = 0;
-    // find closest balloon
     Balloon* target = nullptr;
     float bestDist = m_range * m_range;
     for (auto& b : balloons) {
-        if (!b->reachedGoal()) {
+        if (!b->reachedGoal() && !b->isDead()) {
             float d2 = (b->getPosition() - m_pos).x*(b->getPosition()-m_pos).x
                      + (b->getPosition() - m_pos).y*(b->getPosition()-m_pos).y;
             if (d2 < bestDist) {
@@ -47,7 +44,6 @@ std::vector<ProjectilePtr> NormalTower::update(
     }
     if (!target) return {};
 
-    // fire
     resetCooldown();
     std::vector<ProjectilePtr> shots;
     shots.push_back(std::make_unique<NormalBullet>(m_pos, target));

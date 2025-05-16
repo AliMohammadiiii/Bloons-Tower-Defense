@@ -18,18 +18,17 @@ public:
     virtual int score() const { return 1; }
 
     virtual std::vector<std::unique_ptr<Balloon>> pop();
-    // sf::Vector2f getPosition() const { return m_pos; }
     sf::Vector2f getPosition() const { return m_pos; }
     float        getRadius()   const {
         auto bounds = m_sprite.getGlobalBounds();
-        return bounds.size.x * 0.5f;   // half the sprite’s width in px
+        return bounds.size.x * 0.5f;   
     }
     void freeze(float seconds) { m_frozen = true; m_freezeTimer = seconds; }
     bool isFrozen() const      { return m_frozen; }
     void kill()                { m_dead = true; }
     bool  isDead() const      { return m_dead; }
 
-    void  goal()  { m_reachedGoal = true; }  // reached finish
+    void  goal()  { m_reachedGoal = true; }  
 
 protected:  
     const Map& m_map;
