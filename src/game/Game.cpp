@@ -31,6 +31,13 @@ Game::Game(const std::string& mapFile)
     m_nextWaveTime = WAVE_LAUNCH_GAP_SECS;
     m_playerHealth = Globals::player_health;
     m_playerPoints = Globals::player_init_score;
+    // if (!m_music.loadFromFile("assets/music/epic.mp3")) {
+    //     throw std::runtime_error("Failed to load background music!");
+    // }
+    m_music = sf::Music("assets/music/epic.mp3");
+    m_music.setLooping(true);
+    m_music.setVolume(50.f);      
+    m_music.play();              
 }
 
 void Game::run()

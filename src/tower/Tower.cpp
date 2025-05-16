@@ -23,6 +23,6 @@ bool Tower::isInRange(const sf::Vector2f& p) const {
 }
 
 void Tower::draw(sf::RenderTarget& rt, sf::RenderStates st) const {
-    if (m_timer < 0.f)
-        rt.draw(m_rangeCircle, st);
+    rt.draw(m_rangeCircle, st);
 }
+

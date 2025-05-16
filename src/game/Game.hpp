@@ -20,6 +20,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <SFML/Audio.hpp>
 
 class Game {
 public:
@@ -30,7 +31,8 @@ private:
     Map           m_map;
     MapRenderer   m_renderer;
     sf::RenderWindow m_win;
-
+    sf::Music m_music;
+    
     sf::Clock m_clk;
 
     std::vector<Wave> m_waves;

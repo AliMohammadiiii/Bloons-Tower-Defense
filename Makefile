@@ -1,11 +1,9 @@
 CXX ?= g++
-SFML_INC ?= -I/opt/homebrew/include     # or -I/usr/local/include
+SFML_INC ?= -I/opt/homebrew/include   
 SFML_LIB ?= -L/opt/homebrew/lib
 
 CXXFLAGS ?= -std=c++20 -Wall -Wextra -Iinclude $(SFML_INC)
-LDFLAGS  ?= $(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system
-# CXXFLAGS ?= -std=c++17 -Wall -Wextra -Iinclude -lsfml-graphics -lsfml-window -lsfml-system
-# LDFLAGS ?= -lsfml-graphics -lsfml-window -lsfml-system
+LDFLAGS  ?= $(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 SRC_DIR := src
 OBJ_DIR := build
 BIN_DIR := bin
@@ -13,7 +11,7 @@ BIN_DIR := bin
 SRC := $(shell find $(SRC_DIR) -name '*.cpp')
 OBJ := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC))
 
-TARGET := $(BIN_DIR)/td
+TARGET := $(BIN_DIR)/TD
 
 .PHONY: all
 all: $(TARGET)
