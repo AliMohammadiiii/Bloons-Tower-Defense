@@ -17,7 +17,8 @@ const std::vector<AttackWave> ATTACKING_PLAN = {
 };
 
 
-const int WAVE_LAUNCH_GAP_SECS = 100;
+const int WAVE_LAUNCH_GAP_SECS = 5;
+
 
 #endif 
 

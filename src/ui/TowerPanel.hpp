@@ -3,6 +3,8 @@
 #include <vector>
 #include <array>
 #include "../tower/Tower.hpp"  
+#include "../constants.hpp"
+#include <stdexcept>
 
 class TowerPanel {
 public:

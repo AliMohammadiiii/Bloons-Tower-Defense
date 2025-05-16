@@ -2,6 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include <stdexcept>
 #include <string>
+#include "../constants.hpp"
+
 class Hud {
 public:
     Hud(int& lives, int& score);

@@ -23,7 +23,7 @@ std::pair<bool, std::vector<std::unique_ptr<Balloon>>> IceBullet::update(
     m_shape.setPosition(m_pos);
 
     if (len < m_shape.getRadius() + m_target->getRadius()) {
-        m_target->freeze(2.5f);   
+        m_target->freeze(Globals::ice_freeze_time);   
         return std::make_pair(true, std::vector<std::unique_ptr<Balloon>>{});
     }
     return std::make_pair(false, std::vector<std::unique_ptr<Balloon>>{});

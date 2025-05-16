@@ -1,11 +1,9 @@
 #include "BombTower.hpp"
-#include "../projectile/BombProjectile.hpp"
-#include "TexCache.hpp"
-#include "../constants.hpp"
+
 
 BombTower::BombTower(sf::Vector2f p)
-: Tower(p, 140.f, 1.2f, 30)
-, m_sprite(getTowerTex("assets/sprites/bomb.png"))
+: Tower(p, Globals::bomb_range, Globals::bomb_cooldown, Globals::costs_tower[2])
+, m_sprite(getTowerTex(Assets::BombTowerPath))
 {
     m_rangeCircle.setOutlineColor(sf::Color::Yellow);
 

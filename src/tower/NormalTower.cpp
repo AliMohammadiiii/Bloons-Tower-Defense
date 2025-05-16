@@ -1,11 +1,9 @@
 #include "NormalTower.hpp"
-#include "../projectile/NormalBullet.hpp"
-#include "../constants.hpp"
-#include "TexCache.hpp"
+
 
 NormalTower::NormalTower(sf::Vector2f p)
-: Tower   (p, 100.f, 0.5f, 10)
-, m_sprite(getTowerTex("assets/sprites/normal.png"))   
+: Tower   (p, Globals::normalBullet_range, Globals::normalBullet_cooldown, Globals::costs_tower[0])
+, m_sprite(getTowerTex(Assets::NormalTowerPath))   
 {
     float s = Globals::TILE /
               static_cast<float>(m_sprite.getTexture().getSize().x);

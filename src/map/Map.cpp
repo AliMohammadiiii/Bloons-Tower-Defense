@@ -2,9 +2,9 @@
 
 TileType Map::at(int r,int c) const {
     switch(m_grid[r][c]){
-        case 'S': return TileType::Start;
-        case 'F': return TileType::Finish;
-        case 'O': return TileType::Path;
+        case MAP::Start: return TileType::Start;
+        case MAP::Finish: return TileType::Finish;
+        case MAP::Path: return TileType::Path;
         default : return TileType::Buildable;
     }
 }
@@ -44,7 +44,7 @@ void Map::tracePath()
 
     for(int k=0;k<4;++k){
         int nr=cur.x+dr[k], nc=cur.y+dc[k];
-        if(inBounds(nr,nc) && (m_grid[nr][nc]=='O' || m_grid[nr][nc]=='F')){
+        if(inBounds(nr,nc) && (m_grid[nr][nc]==MAP::Path || m_grid[nr][nc]==MAP::Finish)){
             dir={dr[k],dc[k]}; break;
         }
     }
@@ -54,7 +54,7 @@ void Map::tracePath()
         sf::Vector2i ahead = {cur.x+dir.x, cur.y+dir.y};
 
         if(inBounds(ahead.x,ahead.y) &&
-           (m_grid[ahead.x][ahead.y]=='O'||m_grid[ahead.x][ahead.y]=='F'))
+           (m_grid[ahead.x][ahead.y]==MAP::Path||m_grid[ahead.x][ahead.y]==MAP::Finish))
         {
             cur=ahead;
         } else {
@@ -64,7 +64,7 @@ void Map::tracePath()
                            -dr + rot + 4) % 4 );
                 sf::Vector2i nxt={cur.x+dr[k],cur.y+dc[k]};
                 if(inBounds(nxt.x,nxt.y) &&
-                   (m_grid[nxt.x][nxt.y]=='O'||m_grid[nxt.x][nxt.y]=='F') &&
+                   (m_grid[nxt.x][nxt.y]==MAP::Path||m_grid[nxt.x][nxt.y]==MAP::Finish) &&
                    std::find(m_path.begin(),m_path.end(),nxt)==m_path.end())
                 { dir={dr[k],dc[k]}; cur=nxt; turned=true; break; }
             }

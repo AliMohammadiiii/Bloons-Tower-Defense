@@ -2,6 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include "../map/Map.hpp"
 #include "../constants.hpp"
+#include <stdexcept>
+#include <algorithm>   
 
 class MapRenderer {
 public:
@@ -9,7 +11,7 @@ public:
                 const std::string&     grassTex,
                 const std::string&     roadTex,
                 sf::Vector2u           windowSize,
-                unsigned               panelWidth = 200);  
+                unsigned               panelWidth = Globals::panel_size);  
 
     void draw(sf::RenderWindow& win) const;
 

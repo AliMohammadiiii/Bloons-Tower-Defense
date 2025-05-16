@@ -3,6 +3,10 @@
 #include <memory>
 #include <vector>
 #include <map>
+#include "../constants.hpp"
+#include "../map/Map.hpp"
+#include <cmath>
+#include <stdexcept>
 
 class Map;
 
@@ -15,7 +19,7 @@ public:
     void update(float dt);
     bool reachedGoal() const { return m_reached; }
     Kind kind() const { return m_kind; }
-    virtual int score() const { return 1; }
+    virtual int score() const { return Assets::scoreBalloons; }
 
     virtual std::vector<std::unique_ptr<Balloon>> pop();
     sf::Vector2f getPosition() const { return m_pos; }
@@ -48,6 +52,6 @@ protected:
 class PregnantBalloon : public Balloon {
 public:
     using Balloon::Balloon;
-    int score() const override { return 3; }
+    int score() const override { return Assets::scorePregnantBalloons; }
     std::vector<std::unique_ptr<Balloon>> pop() override;
 };

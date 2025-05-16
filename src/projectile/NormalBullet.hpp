@@ -17,7 +17,7 @@ private:
     sf::CircleShape   m_shape;
     sf::Vector2f      m_pos;
     Balloon*          m_target;
-    float             m_speed{300.f};
+    float             m_speed{Globals::normalBullet_speed};
 
     void draw(sf::RenderTarget& rt, sf::RenderStates st) const override;
 };

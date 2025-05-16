@@ -1,9 +1,4 @@
 #include "Balloon.hpp"
-#include "../map/Map.hpp"
-#include "../constants.hpp"
-#include <cmath>
-#include <map>
-#include <stdexcept>
 
 static sf::Vector2f toPx(const sf::Vector2i& t)
 {
@@ -28,9 +23,9 @@ static sf::Texture& texForKind(Balloon::Kind k)
 {
     switch (k) {
         case Balloon::Kind::Pregnant:
-            return getTexture("assets/sprites/pregnant_balloon.png");
+            return getTexture(Assets::PregnantBalloonsPath);
         default:                      
-            return getTexture("assets/sprites/balloon.png");
+            return getTexture(Assets::BalloonsPath);
     }
 }
 

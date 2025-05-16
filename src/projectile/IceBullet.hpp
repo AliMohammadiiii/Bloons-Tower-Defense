@@ -14,7 +14,7 @@ private:
     sf::CircleShape m_shape;
     sf::Vector2f    m_pos;
     Balloon*        m_target;
-    float           m_speed{280.f};
+    float           m_speed{Globals::ice_speed};
 
     void draw(sf::RenderTarget&, sf::RenderStates) const override;
 };

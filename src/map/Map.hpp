@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <algorithm>
+#include "../constants.hpp"
 
 enum class TileType { Start, Finish, Path, Buildable };
 

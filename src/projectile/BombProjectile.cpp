@@ -1,5 +1,5 @@
 #include "BombProjectile.hpp"
-#include <iostream>
+
 BombProjectile::BombProjectile(
     sf::Vector2f start, Balloon* target, float explosionRadius)
 : m_pos(start)

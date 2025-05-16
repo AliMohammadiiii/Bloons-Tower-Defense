@@ -1,7 +1,5 @@
-// src/renderer/MapRenderer.cpp
 #include "MapRenderer.hpp"
-#include <stdexcept>
-#include <algorithm>      
+   
 
 MapRenderer::MapRenderer(const Map&         map,
                          const std::string& grass,

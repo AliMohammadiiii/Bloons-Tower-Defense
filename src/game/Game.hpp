@@ -18,6 +18,8 @@
 #include "../tower/BombTower.hpp"
 #include "../constants.hpp"
 
+#include <iostream>
+#include <algorithm>
 
 class Game {
 public:
@@ -33,17 +35,17 @@ private:
 
     std::vector<Wave> m_waves;
     std::size_t       m_waveIdx      {0};
-    float             m_nextWaveTime {0.f};
+    float             m_nextWaveTime;
 
     std::vector<std::unique_ptr<Balloon>>   m_balloons;
     std::vector<std::unique_ptr<Tower>>     m_towers;
     std::vector<ProjectilePtr>              m_projectiles;
 
-    int        m_playerPoints  {50};     
-    int        m_playerHealth  {20};
+    int        m_playerPoints;     
+    int        m_playerHealth;
     TowerType  m_pendingPlacement {TowerType::None};
 
-    TowerPanel m_panel {200, 720, m_playerPoints};
+    TowerPanel m_panel {Globals::panel_size, Globals::screen_size[1], m_playerPoints};
     Hud        m_hud   {m_playerHealth, m_playerPoints};
 
     bool     m_gameOver {false};

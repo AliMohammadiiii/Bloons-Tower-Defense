@@ -1,10 +1,9 @@
 #include "IceTower.hpp"
-#include "../projectile/IceBullet.hpp"
-#include "../constants.hpp"
+
 
 IceTower::IceTower(sf::Vector2f p)
-: Tower(p, 110.f, 0.8f, 15)
-, m_sprite(getTowerTex("assets/sprites/ice.png"))
+: Tower(p, Globals::ice_speed, Globals::ice_cooldown, Globals::costs_tower[1])
+, m_sprite(getTowerTex(Assets::IceTowerPath))
 {
     m_rangeCircle.setOutlineColor(sf::Color::Cyan);
 

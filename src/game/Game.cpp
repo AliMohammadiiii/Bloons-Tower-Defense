@@ -1,12 +1,10 @@
 
 #include "Game.hpp"
 
-#include <iostream>
-#include <algorithm>
 static sf::Font& hudFont()
 {
     static sf::Font font;
-    static bool ok = font.openFromFile("assets/fonts/OpenSans.ttf");
+    static bool ok = font.openFromFile(Assets::FontSF);
     if (!ok) throw std::runtime_error("missing font");
     return font;
 }
@@ -14,14 +12,14 @@ static sf::Font& hudFont()
 Game::Game(const std::string& mapFile)
 : m_map      (mapFile)
 , m_renderer (m_map,
-              "assets/tiles/grass.jpg",
-              "assets/tiles/road.jpg",
-              {1080, 720},
-              200)
-, m_win      (sf::VideoMode(sf::Vector2u{1080,720}), "Bloons TD")
-, m_endText  (hudFont(), "", 60)           
+              Assets::GrassPath,
+              Assets::RoadPath,
+              {Globals::screen_size[0], Globals::screen_size[1]},
+              Globals::panel_size)
+, m_win      (sf::VideoMode(sf::Vector2u{Globals::screen_size[0], Globals::screen_size[1]}), "Bloons TD")
+, m_endText  (hudFont(), "", Globals::frame_rate)           
 {
-    m_win.setFramerateLimit(60);
+    m_win.setFramerateLimit(Globals::frame_rate);
 
     for (const auto& spec : ATTACKING_PLAN)
         m_waves.emplace_back(m_map, spec);
@@ -29,7 +27,10 @@ Game::Game(const std::string& mapFile)
     m_nextWaveTime = WAVE_LAUNCH_GAP_SECS;
 
     m_endText.setFillColor(sf::Color::White);
-    m_endText.setPosition(sf::Vector2f{540.f, 360.f});   
+    m_endText.setPosition(sf::Vector2f{Globals::screen_sizef[0] / 2,Globals::screen_sizef[1] / 2}); 
+    m_nextWaveTime = WAVE_LAUNCH_GAP_SECS;
+    m_playerHealth = Globals::player_health;
+    m_playerPoints = Globals::player_init_score;
 }
 
 void Game::run()
@@ -53,7 +54,7 @@ void Game::run()
         m_hud.draw(m_win);
 
         if (m_gameOver) {
-            sf::RectangleShape fade(sf::Vector2f{1080.f,720.f});
+            sf::RectangleShape fade(sf::Vector2f{Globals::screen_sizef[0], Globals::screen_sizef[1]});
             fade.setFillColor(sf::Color(0,0,0,150));
             m_win.draw(fade);
             m_win.draw(m_endText);
@@ -90,7 +91,7 @@ void Game::handleEvents()
                 float padX = m_renderer.leftPad();
                 float padY = m_renderer.topPad();
 
-                if (mousePx.x < padX || mousePx.x > 1080-200) return;
+                if (mousePx.x < padX || mousePx.x > Globals::screen_sizef[0]-Globals::panel_size) return;
                 if (mousePx.y < padY)                         return;
 
                 int col = int((mousePx.x - padX) / Globals::TILE);
@@ -131,17 +132,19 @@ void Game::handleEvents()
             }
     }
 }
-
 void Game::update(float dt)
 {
-    static float gTime = 0.f; gTime += dt;
-    if (m_waveIdx < m_waves.size() && gTime >= m_nextWaveTime)
-        m_nextWaveTime += WAVE_LAUNCH_GAP_SECS;
+    static float gTime = 0.f; 
+    gTime += dt;
 
-    if (m_waveIdx < m_waves.size()) {
+    if (m_waveIdx < m_waves.size() && gTime >= m_nextWaveTime) {
         auto spawned = m_waves[m_waveIdx].update(dt);
         for (auto& b : spawned) m_balloons.push_back(std::move(b));
-        if (m_waves[m_waveIdx].finished()) ++m_waveIdx;
+        if (m_waves[m_waveIdx].finished())
+        {
+            ++m_waveIdx;
+            m_nextWaveTime = gTime + WAVE_LAUNCH_GAP_SECS;
+        } 
     }
 
     for (auto& t : m_towers) {
@@ -192,7 +195,7 @@ void Game::update(float dt)
             }),
         m_balloons.end()
     );
-
+    m_panel.update();
     if (!m_gameOver && m_playerHealth <= 0) {
         m_endText.setString("YOU LOSE!");
         auto b = m_endText.getLocalBounds();

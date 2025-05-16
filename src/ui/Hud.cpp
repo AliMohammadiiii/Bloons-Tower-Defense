@@ -1,11 +1,10 @@
 #include "Hud.hpp"
 
 
-// singleton font
 static sf::Font& hudFont()
 {
     static sf::Font font;
-    static bool ok = font.openFromFile("assets/fonts/OpenSans.ttf");
+    static bool ok = font.openFromFile(Assets::FontSF);
     if (!ok) throw std::runtime_error("missing font");
     return font;
 }

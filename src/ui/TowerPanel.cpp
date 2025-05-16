@@ -1,23 +1,20 @@
 #include "TowerPanel.hpp"
-#include <stdexcept>
-#include <iostream>
 
 TowerPanel::TowerPanel(unsigned w, unsigned h, int& pts)
 : m_points(pts)
 {
     m_bg.setSize(sf::Vector2f{float(w), float(h)});
     m_bg.setFillColor(sf::Color(20,20,20,200));
-    m_bg.setPosition(sf::Vector2f{1080.f - w, 0.f});
+    m_bg.setPosition(sf::Vector2f{Globals::screen_sizef[0] - w, 0.f});
 
-    if (!m_font.openFromFile("assets/fonts/OpenSans.ttf"))
+    if (!m_font.openFromFile(Assets::FontSF))
         throw std::runtime_error("Missing font assets/fonts/OpenSans.ttf");
 
     const std::array<std::string,3> files = {
-        "assets/sprites/normal.png",
-        "assets/sprites/ice.png",
-        "assets/sprites/bomb.png"
+        Assets::NormalTowerPath,
+        Assets::IceTowerPath,
+        Assets::BombTowerPath
     };
-    const int costs[3] = {10, 15, 30};
     const float iconSize = 40.f;
 
     m_icons.reserve(3);
@@ -38,7 +35,7 @@ TowerPanel::TowerPanel(unsigned w, unsigned h, int& pts)
             60.f + i * 80.f });
         m_icons.push_back(icon);
 
-        sf::Text lbl(m_font, std::to_string(costs[i]), 18);
+        sf::Text lbl(m_font, std::to_string(Globals::costs_tower[i]), 18);
         lbl.setOrigin(sf::Vector2f{ lbl.getLocalBounds().size.x / 2.f, 0.f });
         lbl.setFillColor(sf::Color::White);
         lbl.setPosition(icon.getPosition() + sf::Vector2f{0.f, 45.f});
@@ -46,12 +43,12 @@ TowerPanel::TowerPanel(unsigned w, unsigned h, int& pts)
     }
 }
 
+
 void TowerPanel::update()
 {
-    const int costs[3] = {10, 15, 30};
     for (int i=0;i<3;++i)
     {
-        bool afford = (m_points >= costs[i]);
+        bool afford = (m_points >= Globals::costs_tower[i]);
         m_icons [i].setTexture( afford ? m_texColor[i] : m_texGray[i] );
         m_prices[i].setFillColor(
             afford ? sf::Color::White : sf::Color(140,140,140) );

@@ -1,7 +1,8 @@
 #pragma once
 #include "Tower.hpp"
 #include "TexCache.hpp"
-
+#include "../projectile/IceBullet.hpp"
+#include "../constants.hpp"
 class IceTower : public Tower {
 public:
     IceTower(sf::Vector2f pos);

@@ -1,7 +1,9 @@
 #pragma once
 #include "Tower.hpp"
 #include "TexCache.hpp"
-
+#include "../projectile/NormalBullet.hpp"
+#include "../constants.hpp"
+#include "TexCache.hpp"
 class NormalTower : public Tower {
 public:
     NormalTower(sf::Vector2f pos);
